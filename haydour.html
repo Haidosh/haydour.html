@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سليل 🩷</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #e91e8c;
+    --light-pink: #f48fb1;
+    --soft-pink: #fce4ec;
+    --dark-pink: #c2185b;
+    --deep: #1a0010;
+    --card-bg: #0d0d0d;
+    --glow: #ff4da6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--deep);
+    color: #fff;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ===== PARTICLES ===== */
+  #particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    font-size: 16px;
+    animation: floatUp linear infinite;
+    opacity: 0;
+  }
+  @keyframes floatUp {
+    0%   { opacity: 0; transform: translateY(100vh) scale(0.5); }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-10vh) scale(1.2); }
+  }
+
+  /* ===== SCREENS ===== */
+  .screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 30px 20px;
+    position: relative;
+    z-index: 1;
+    animation: fadeIn 0.6s ease;
+  }
+  .screen.active { display: flex; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== INTRO SCREEN ===== */
+  #screen-intro {
+    background: radial-gradient(ellipse at center, #1a0018 0%, #0d0010 100%);
+  }
+
+  /* ===== HELLO SCREEN ===== */
+  #screen-hello { background: linear-gradient(180deg, #1a0018 0%, #0d000a 100%); }
+
+  /* ===== QUESTION 1 ===== */
+  #screen-q1 { background: linear-gradient(180deg, #1a0010 0%, #0d0008 100%); }
+
+  /* ===== QUESTION 2 (تحبين؟) ===== */
+  #screen-q2 { background: linear-gradient(180deg, #3d0030 0%, #1a0018 100%); }
+
+  /* ===== YES RESPONSE ===== */
+  #screen-yes { background: linear-gradient(180deg, #1a0018 0%, #0d0010 100%); }
+
+  /* ===== ASK ME ===== */
+  #screen-askme { background: linear-gradient(180deg, #1a0010 0%, #0d000a 100%); }
+
+  /* ===== HEART QUESTION ===== */
+  #screen-heartq { background: linear-gradient(180deg, #3d0030 0%, #1a0018 100%); }
+
+  /* ===== LOVE MESSAGE ===== */
+  #screen-lovemsg { background: linear-gradient(180deg, #1a0018 0%, #0d0010 100%); }
+
+  /* ===== MUSIC ===== */
+  #screen-music { background: linear-gradient(180deg, #0d0010 0%, #1a0018 100%); }
+
+  /* ===== KittyCard ===== */
+  .kitty-card {
+    background: linear-gradient(135deg, #fce4ec, #f8bbd9, #fce4ec);
+    border-radius: 24px;
+    padding: 20px;
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 40px rgba(233,30,140,0.4), 0 0 80px rgba(233,30,140,0.15);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .kitty-card::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, var(--pink), var(--light-pink), var(--pink));
+    border-radius: 26px;
+    z-index: -1;
+    animation: borderGlow 3s linear infinite;
+  }
+  @keyframes borderGlow {
+    0%,100% { opacity: 0.7; }
+    50% { opacity: 1; }
+  }
+  .kitty-card img {
+    width: 100%;
+    max-width: 280px;
+    border-radius: 16px;
+    object-fit: cover;
+  }
+  .kitty-emoji {
+    font-size: 160px;
+    line-height: 1;
+    filter: drop-shadow(0 10px 30px rgba(233,30,140,0.5));
+    animation: kittyBob 3s ease-in-out infinite;
+  }
+  @keyframes kittyBob {
+    0%,100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-15px) rotate(2deg); }
+  }
+
+  /* ===== HELLO KITTY IMAGE ===== */
+  .kitty-img {
+    width: 100%;
+    max-width: 260px;
+    border-radius: 16px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ===== TEXT BOX ===== */
+  .text-box {
+    background: #0d0d0d;
+    border: 2px solid var(--pink);
+    border-radius: 16px;
+    padding: 14px 20px;
+    font-size: 17px;
+    color: #fff;
+    text-align: center;
+    max-width: 320px;
+    width: 100%;
+    margin-bottom: 16px;
+    box-shadow: 0 0 20px rgba(233,30,140,0.3);
+    line-height: 1.6;
+  }
+
+  /* ===== BUTTONS ===== */
+  .btn-pink {
+    background: linear-gradient(135deg, var(--pink), var(--dark-pink));
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 40px;
+    font-size: 18px;
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 30px rgba(233,30,140,0.5);
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+    margin: 6px;
+  }
+  .btn-pink::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    transform: scale(0);
+    transition: transform 0.4s;
+  }
+  .btn-pink:active::before { transform: scale(1); }
+  .btn-pink:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 40px rgba(233,30,140,0.7);
+  }
+  .btn-pink:active {
+    transform: translateY(1px) scale(0.97);
+  }
+
+  /* ===== CLICKABLE TEXT AS BUTTON ===== */
+  .btn-text-link {
+    background: none;
+    border: none;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: #ffcc80;
+    text-shadow: 0 0 20px rgba(255,200,0,0.8);
+    letter-spacing: 2px;
+    cursor: pointer;
+    animation: textGlow 2s ease-in-out infinite;
+    padding: 10px 20px;
+    border-radius: 12px;
+    transition: all 0.2s;
+  }
+  .btn-text-link:hover {
+    background: rgba(255,204,0,0.1);
+    transform: scale(1.05);
+  }
+
+  /* ===== INTRO GLOW ===== */
+  .intro-glow {
+    width: 140px; height: 140px;
+    background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 60px 30px rgba(233,30,140,0.3), 0 0 120px 60px rgba(233,30,140,0.1);
+    animation: pulse 2s ease-in-out infinite;
+    margin-bottom: 15px;
+    overflow: hidden;
+  }
+  .intro-glow img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); box-shadow: 0 0 60px 30px rgba(233,30,140,0.3); }
+    50% { transform: scale(1.08); box-shadow: 0 0 80px 40px rgba(233,30,140,0.5); }
+  }
+
+  @keyframes textGlow {
+    0%,100% { text-shadow: 0 0 20px rgba(255,200,0,0.8); }
+    50% { text-shadow: 0 0 40px rgba(255,200,0,1), 0 0 80px rgba(255,200,0,0.5); }
+  }
+
+  .btn-back {
+    background: transparent;
+    color: var(--light-pink);
+    border: 1.5px solid var(--light-pink);
+    border-radius: 50px;
+    padding: 10px 28px;
+    font-size: 15px;
+    font-family: 'Tajawal', sans-serif;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.2s;
+  }
+  .btn-back:hover { background: rgba(233,30,140,0.15); }
+
+  /* ===== CONFETTI ===== */
+  .confetti-piece {
+    position: fixed;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    animation: confettiFall 1.2s ease-out forwards;
+  }
+  @keyframes confettiFall {
+    0%   { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+    100% { opacity: 0; transform: translateY(300px) rotate(720deg) scale(0.3); }
+  }
+
+  /* ===== RIPPLE ===== */
+  .ripple {
+    position: fixed;
+    border-radius: 50%;
+    background: rgba(233,30,140,0.4);
+    transform: scale(0);
+    animation: rippleAnim 0.6s linear;
+    pointer-events: none;
+    z-index: 9998;
+  }
+  @keyframes rippleAnim {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* ===== HEARTS FLOATING ===== */
+  .float-heart {
+    position: fixed;
+    font-size: 24px;
+    pointer-events: none;
+    z-index: 9999;
+    animation: floatHeart 1.5s ease-out forwards;
+  }
+  @keyframes floatHeart {
+    0%   { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-200px) scale(1.5); }
+  }
+
+  /* ===== MUSIC PLAYER ===== */
+  .music-player {
+    background: rgba(13,13,13,0.9);
+    border: 2px solid rgba(233,30,140,0.5);
+    border-radius: 24px;
+    padding: 24px;
+    width: 100%;
+    max-width: 320px;
+    box-shadow: 0 0 60px rgba(233,30,140,0.3);
+    backdrop-filter: blur(10px);
+  }
+  .player-title {
+    font-size: 18px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .player-cover {
+    width: 160px; height: 160px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+    box-shadow: 0 0 40px rgba(233,30,140,0.4);
+    animation: spin 8s linear infinite paused;
+    overflow: hidden;
+  }
+  .player-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+  }
+  .player-cover.playing { animation-play-state: running; }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  .progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    margin: 12px 0 6px;
+    cursor: pointer;
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--pink), var(--light-pink));
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.5s linear;
+  }
+  .time-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 16px;
+  }
+  .player-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+  .ctrl-btn {
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--pink), var(--dark-pink));
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(233,30,140,0.5);
+    transition: all 0.2s;
+  }
+  .ctrl-btn:hover { transform: scale(1.1); }
+  .ctrl-btn:active { transform: scale(0.95); }
+  .ctrl-btn.main { width: 60px; height: 60px; font-size: 24px; }
+
+  /* ===== HEART LOVE BTN ===== */
+  .heart-love {
+    position: absolute;
+    top: 16px; left: 16px;
+    font-size: 28px;
+    cursor: pointer;
+    animation: heartbeat 1.5s ease-in-out infinite;
+  }
+  @keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+
+  /* ===== MESSAGE SCREEN ===== */
+  .message-card {
+    background: #0d0d0d;
+    border: 2px solid var(--pink);
+    border-radius: 20px;
+    padding: 24px 20px;
+    max-width: 340px;
+    width: 100%;
+    font-size: 18px;
+    line-height: 2;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 0 40px rgba(233,30,140,0.3);
+    margin-bottom: 20px;
+  }
+
+  /* ===== BIG HEART BUTTON ===== */
+  .btn-heart-big {
+    font-size: 90px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    animation: bigHeartBeat 1.2s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(233,30,140,0.8));
+    transition: transform 0.1s;
+    display: block;
+    margin: 20px auto;
+    line-height: 1;
+  }
+  .btn-heart-big:active {
+    transform: scale(0.85) !important;
+  }
+  @keyframes bigHeartBeat {
+    0%,100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(233,30,140,0.8)); }
+    50% { transform: scale(1.18); filter: drop-shadow(0 0 40px rgba(233,30,140,1)); }
+  }
+
+  /* ===== HEART QUESTION SCREEN ===== */
+  .heartq-subtitle {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    margin-top: -10px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  /* ===== DOTS INDICATOR ===== */
+  .dots {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+    justify-content: center;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    transition: all 0.3s;
+  }
+  .dot.active { background: var(--pink); transform: scale(1.3); }
+
+  /* ===== SPARKLE BURST ===== */
+  .sparkle {
+    position: fixed;
+    font-size: 20px;
+    pointer-events: none;
+    z-index: 9999;
+    animation: sparklePop 0.8s ease-out forwards;
+  }
+  @keyframes sparklePop {
+    0%   { opacity: 1; transform: scale(0) rotate(0deg); }
+    50%  { opacity: 1; transform: scale(1.5) rotate(180deg); }
+    100% { opacity: 0; transform: scale(0.5) rotate(360deg) translateY(-80px); }
+  }
+
+  /* ===== GLASS MUSIC PLAYER ===== */
+  #screen-music {
+    background: radial-gradient(ellipse at 50% 60%, #3d0030 0%, #1a0018 40%, #0d000a 100%);
+  }
+  .glass-player {
+    position: relative;
+    background: rgba(255, 180, 220, 0.13);
+    border: 1.5px solid rgba(255, 180, 220, 0.35);
+    border-radius: 28px;
+    padding: 24px 22px 28px;
+    width: 100%;
+    max-width: 310px;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow:
+      0 0 60px rgba(233,30,140,0.45),
+      0 0 120px rgba(233,30,140,0.2),
+      inset 0 1px 0 rgba(255,255,255,0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+  /* corner heart */
+  .gp-heart-corner {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    font-size: 26px;
+    cursor: pointer;
+    animation: heartbeat 1.4s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(233,30,140,0.9));
+  }
+  /* title */
+  .gp-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 18px;
+    text-shadow: 0 0 12px rgba(255,150,200,0.6);
+    letter-spacing: 0.5px;
+  }
+  /* album cover */
+  .gp-cover {
+    width: 200px;
+    height: 200px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #fce4ec, #f8bbd9, #fce4ec);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+      0 0 30px rgba(233,30,140,0.5),
+      0 8px 32px rgba(0,0,0,0.4);
+    margin-bottom: 20px;
+    flex-shrink: 0;
+    animation: coverFloat 4s ease-in-out infinite;
+  }
+  @keyframes coverFloat {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+  }
+  .gp-cover img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 18px;
+  }
+  /* progress */
+  .gp-progress-wrap {
+    width: 100%;
+    margin-bottom: 4px;
+  }
+  .gp-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+  }
+  .gp-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #e91e8c, #f48fb1);
+    border-radius: 2px;
+    transition: width 0.4s linear;
+    position: relative;
+  }
+  .gp-fill::after {
+    content: '';
+    position: absolute;
+    right: -5px; top: -4px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #e91e8c;
+    box-shadow: 0 0 8px rgba(233,30,140,0.9);
+  }
+  .gp-times {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 6px;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  /* controls */
+  .gp-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+  }
+  .gp-btn {
+    width: 54px; height: 54px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e91e8c, #c2185b);
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(233,30,140,0.6);
+    transition: all 0.18s;
+  }
+  .gp-btn:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(233,30,140,0.8); }
+  .gp-btn:active { transform: scale(0.92); }
+  .gp-btn.main { width: 66px; height: 66px; font-size: 26px; }
+
+  /* back button */
+  .btn-back-music {
+    background: linear-gradient(135deg, #e91e8c, #c2185b);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 44px;
+    font-size: 18px;
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 30px rgba(233,30,140,0.5);
+    transition: all 0.2s;
+    margin-top: 22px;
+  }
+  .btn-back-music:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 40px rgba(233,30,140,0.7); }
+  .btn-back-music:active { transform: scale(0.96); }
+</style>
+</head>
+<body>
+
+<!-- PARTICLES -->
+<div id="particles"></div>
+
+<!-- ==================== SCREEN 1: INTRO ==================== -->
+<div class="screen active" id="screen-intro">
+  <div class="intro-glow">
+    <!-- ضع رابط صورة هيلو كتي هنا -->
+    <img src="image/c.jpg" alt="Hello Kitty" onerror="this.style.display='none'; this.parentElement.innerHTML='🩷';">
+  </div>
+  <!-- كلمة "انتِ سلسبيل ؟" نفسها زر يوجهك للواجهة الثانية -->
+  <button class="btn-text-link" onclick="goTo('screen-hello'); spawnConfetti(window.innerWidth/2, window.innerHeight/2);">انتِ سلسبيل ؟</button>
+</div>
+
+<!-- ==================== SCREEN 2: HELLO ==================== -->
+<div class="screen" id="screen-hello">
+  <div class="kitty-card">
+    <!-- ضع رابط صورة هيلو كتي هنا -->
+    <img class="kitty-img" src="image/cc.jpg" alt="Hello Kitty" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'font-size:120px;line-height:1;\'>🐱</div>';">
+  </div>
+  <div class="text-box">هلو سليلي</div>
+  <button class="btn-pink" onclick="goTo('screen-q1')">هلووو 💗</button>
+</div>
+
+<!-- ==================== SCREEN 3: QUESTION 1 ==================== -->
+<div class="screen" id="screen-q1">
+  <div class="kitty-card">
+    <!-- ضع رابط صورة هيلو كتي هنا -->
+    <img class="kitty-img" src="image/d.jpg" alt="Hello Kitty" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'font-size:120px;line-height:1;\'>😺</div>';">
+  </div>
+  <div class="text-box">سليل عندي سؤال الجج</div>
+  <button class="btn-pink" onclick="goTo('screen-q2')">شنو هو؟ </button>
+</div>
+
+<!-- ==================== SCREEN 4: QUESTION 2 ==================== -->
+<div class="screen" id="screen-q2">
+  <div class="kitty-card">
+    <!-- ضع رابط صورة هيلو كتي هنا -->
+    <img class="kitty-img" src="image/ccc.jpg" alt="Hello Kitty" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'font-size:120px;line-height:1;\'>😾</div>';">
+  </div>
+  <div class="text-box">بس مستحية اسألج ياه</div>
+  <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+    <button class="btn-pink" onclick="handleYes()">اسأليني </button>
+  </div>
+</div>
+
+<!-- ==================== SCREEN 5: YES RESPONSE ==================== -->
+<div class="screen" id="screen-yes">
+  <div class="kitty-card">
+    <!-- ضع رابط صورة هيلو كتي هنا -->
+    <img class="kitty-img" src="image/vvv.jpg" alt="Hello Kitty" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'font-size:120px;line-height:1;\'>😻</div>';">
+  </div>
+  <div class="text-box">تحبين حيدوري لو لا ؟؟</div>
+  <button class="btn-pink" style="margin-top:10px;" onclick="goTo('screen-askme')">ها🤭؟</button>
+</div>
+
+<!-- ==================== SCREEN 6: ASK ME ==================== -->
+<div class="screen" id="screen-askme">
+  <div class="kitty-card">
+    <!-- ضع رابط صورة هيلو كتي هنا -->
+    <img class="kitty-img" src="image/v.jpg" alt="Hello Kitty" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'font-size:120px;line-height:1;\'>😉</div>';">
+  </div>
+  <div class="text-box">شنو ها🙄 تحبين حيدوري لو لا ؟</div>
+  <button class="btn-pink" style="margin-top:10px;" onclick="goTo('screen-heartq')">مدري</button>
+</div>
+
+<!-- ==================== SCREEN 7: HEART QUESTION ==================== -->
+<div class="screen" id="screen-heartq">
+  <div class="kitty-card">
+    <!-- ضع رابط صورة هيلو كتي هنا -->
+    <img class="kitty-img" src=" image/vv.jpg" alt="Hello Kitty" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'font-size:120px;line-height:1;\'>🥺</div>';">
+  </div>
+  <div class="text-box">اذا تحبين حيدوري ضغطي قلب </div>
+  <button class="btn-heart-big" id="heartBtn" onclick="heartBigClick(this)">🩷</button>
+</div>
+
+<!-- ==================== SCREEN 8: LOVE MESSAGE ==================== -->
+<div class="screen" id="screen-lovemsg">
+  <div class="kitty-card">
+    <!-- ضع رابط صورة هيلو كتي هنا -->
+    <img class="kitty-img" src="image/d.jpg" alt="Hello Kitty" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'font-size:120px;line-height:1;\'>😻</div>';">
+  </div>
+  <div class="message-card">
+     <br> حيدور يكَول 
+    <br> سليلي حبيبة عمري وعيوني عساج سالمة و بسماتج متروح من وجهج الحلو
+    <br>
+   <h3> احبج حيل 💗</h3>
+  </div>
+  <button class="btn-pink" onclick="goTo('screen-music')">اضغطي 🎵</button>
+</div>
+
+<!-- ==================== SCREEN 9: MUSIC ==================== -->
+<div class="screen" id="screen-music">
+
+  <div class="glass-player">
+    <!-- قلب الزاوية -->
+    <div class="gp-heart-corner" onclick="heartClick(this)">💗</div>
+
+    <!-- العنوان -->
+    <div class="gp-title">🎵 أغنيتج المفضلة</div>
+
+    <!-- غلاف الألبوم — ضع رابط صورة هيلو كتي هنا -->
+    <div class="gp-cover" id="gpCover">
+      <img src="image/dd.jpg" alt="Hello Kitty"
+           onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'font-size:90px;\'>🐱</span>';">
+    </div>
+
+    <!-- شريط التقدم -->
+    <div class="gp-progress-wrap">
+      <div class="gp-bar" id="gpBar" onclick="gpSeek(event)">
+        <div class="gp-fill" id="gpFill"></div>
+      </div>
+      <div class="gp-times">
+        <span id="gpCurrent">0:00</span>
+        <span id="gpTotal">0:00</span>
+      </div>
+    </div>
+
+    <!-- أزرار التحكم -->
+    <div class="gp-controls">
+      <button class="gp-btn" onclick="gpSkipBack()">⏮</button>
+      <button class="gp-btn main" id="gpPlayBtn" onclick="gpToggle()">▶</button>
+      <button class="gp-btn" onclick="gpSkipFwd()">⏭</button>
+    </div>
+
+    <!-- يوتيوب مخفي للصوت فقط -->
+    <audio id="gpAudio" onended="gpReset()" ontimeupdate="gpUpdate()">
+      <source src="https://www.youtube.com/watch?v=vAmNo8MejGI" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <button class="btn-back-music" onclick="goTo('screen-intro')">♥ العودة للبداية</button>
+
+</div>
+
+<!-- DOTS -->
+<div class="dots" id="dotsBar">
+  <div class="dot active" id="dot0"></div>
+  <div class="dot" id="dot1"></div>
+  <div class="dot" id="dot2"></div>
+  <div class="dot" id="dot3"></div>
+  <div class="dot" id="dot4"></div>
+  <div class="dot" id="dot5"></div>
+  <div class="dot" id="dot6"></div>
+  <div class="dot" id="dot7"></div>
+  <div class="dot" id="dot8"></div>
+</div>
+
+<script>
+// ===== PARTICLES =====
+(function createParticles() {
+  const emojis = [,'💗','💕','✨','🌸','💝','⭐','🌺'];
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (6 + Math.random() * 8) + 's';
+    p.style.animationDelay = (Math.random() * 8) + 's';
+    p.style.fontSize = (12 + Math.random() * 14) + 'px';
+    container.appendChild(p);
+  }
+})();
+
+// ===== SCREEN NAVIGATION =====
+const screenOrder = [
+  'screen-intro',
+  'screen-hello',
+  'screen-q1',
+  'screen-q2',
+  'screen-yes',
+  'screen-askme',
+  'screen-heartq',
+  'screen-lovemsg',
+  'screen-music'
+];
+
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const idx = screenOrder.indexOf(id);
+  document.querySelectorAll('.dot').forEach((d, i) => {
+    d.classList.toggle('active', i === idx);
+  });
+  createRipple(window.innerWidth/2, window.innerHeight/2);
+}
+
+// ===== HANDLE YES (from screen-q2) =====
+function handleYes() {
+  spawnConfetti(window.innerWidth/2, window.innerHeight/2);
+  goTo('screen-yes');
+}
+
+// ===== BIG HEART CLICK =====
+function heartBigClick(el) {
+  // burst many hearts
+  for (let i = 0; i < 20; i++) {
+    setTimeout(() => {
+      const h = document.createElement('div');
+      h.className = 'float-heart';
+      h.textContent = [,'💗','💕','💖','❤️','⭐'][Math.floor(Math.random()*6)];
+      h.style.left = (20 + Math.random() * 60) + 'vw';
+      h.style.top  = (30 + Math.random() * 40) + 'vh';
+      h.style.fontSize = (18 + Math.random() * 22) + 'px';
+      h.style.animationDuration = (1 + Math.random() * 1.2) + 's';
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 2500);
+    }, i * 60);
+  }
+  spawnConfetti(window.innerWidth/2, window.innerHeight/2);
+  // shake animation
+  el.style.animation = 'none';
+  el.style.transform = 'scale(1.4)';
+  setTimeout(() => {
+    el.style.transform = '';
+    el.style.animation = '';
+  }, 300);
+  // navigate after short delay
+  setTimeout(() => goTo('screen-lovemsg'), 900);
+}
+
+// ===== RIPPLE =====
+function createRipple(x, y) {
+  const r = document.createElement('div');
+  r.className = 'ripple';
+  r.style.left = (x - 50) + 'px';
+  r.style.top  = (y - 50) + 'px';
+  r.style.width = r.style.height = '100px';
+  document.body.appendChild(r);
+  setTimeout(() => r.remove(), 700);
+}
+
+// ===== BUTTON CLICK EFFECTS =====
+document.querySelectorAll('.btn-pink').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    spawnConfetti(e.clientX, e.clientY);
+    spawnSparkles(e.clientX, e.clientY);
+  });
+});
+
+// ===== CONFETTI =====
+function spawnConfetti(x, y) {
+  const colors = ['#e91e8c','#f48fb1','#ff80ab','#ffd1e8','#fff','#ff4da6'];
+  const shapes = ['⭐','💗','✨','🌸','⭐'];
+  for (let i = 0; i < 12; i++) {
+    const c = document.createElement('div');
+    c.style.cssText = `
+      position:fixed; pointer-events:none; z-index:9999;
+      left:${x + (Math.random()-0.5)*60}px;
+      top:${y + (Math.random()-0.5)*40}px;
+      font-size:${14+Math.random()*10}px;
+    `;
+    if (Math.random() > 0.5) {
+      c.textContent = shapes[Math.floor(Math.random()*shapes.length)];
+    } else {
+      c.className = 'confetti-piece';
+      c.style.background = colors[Math.floor(Math.random()*colors.length)];
+      c.style.left = (x + (Math.random()-0.5)*100) + 'px';
+      c.style.top  = y + 'px';
+    }
+    c.style.animation = `confettiFall ${0.8+Math.random()*0.6}s ease-out forwards`;
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 1500);
+  }
+}
+
+// ===== SPARKLES =====
+function spawnSparkles(x, y) {
+  const sparks = ['✨','💫','⭐','🌟'];
+  for (let i = 0; i < 5; i++) {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.textContent = sparks[Math.floor(Math.random()*sparks.length)];
+    s.style.left = (x + (Math.random()-0.5)*80) + 'px';
+    s.style.top  = (y + (Math.random()-0.5)*60) + 'px';
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 900);
+  }
+}
+
+// ===== HEART CLICK =====
+function heartClick(el) {
+  el.style.transform = 'scale(1.5)';
+  setTimeout(() => el.style.transform = '', 300);
+  for (let i = 0; i < 8; i++) {
+    const h = document.createElement('div');
+    h.className = 'float-heart';
+    h.textContent = ['⭐','💗','💕','💖','❤️'][Math.floor(Math.random()*5)];
+    const rect = el.getBoundingClientRect();
+    h.style.left = (rect.left + (Math.random()-0.5)*80) + 'px';
+    h.style.top  = rect.top + 'px';
+    h.style.animationDuration = (1 + Math.random()*0.8) + 's';
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 2000);
+  }
+}
+
+// ===== CLICK RIPPLE ON ALL BUTTONS =====
+document.addEventListener('click', function(e) {
+  if (e.target.tagName === 'BUTTON') {
+    createRipple(e.clientX, e.clientY);
+  }
+});
+
+// ===== GLASS PLAYER =====
+let gpPlaying = false;
+const gpAudio   = document.getElementById('gpAudio');
+const gpPlayBtn = document.getElementById('gpPlayBtn');
+const gpCover   = document.getElementById('gpCover');
+
+function gpToggle() {
+  if (gpPlaying) {
+    gpAudio.pause();
+    gpPlayBtn.textContent = '▶';
+    gpCover.style.animationPlayState = 'paused';
+  } else {
+    gpAudio.play().catch(() => {});
+    gpPlayBtn.textContent = '⏸';
+    gpCover.style.animationPlayState = 'running';
+  }
+  gpPlaying = !gpPlaying;
+}
+function gpUpdate() {
+  if (!gpAudio.duration) return;
+  const pct = (gpAudio.currentTime / gpAudio.duration) * 100;
+  document.getElementById('gpFill').style.width = pct + '%';
+  document.getElementById('gpCurrent').textContent = gpFmt(gpAudio.currentTime);
+  document.getElementById('gpTotal').textContent   = gpFmt(gpAudio.duration);
+}
+function gpSeek(e) {
+  if (!gpAudio.duration) return;
+  const bar  = document.getElementById('gpBar');
+  const rect = bar.getBoundingClientRect();
+  gpAudio.currentTime = ((e.clientX - rect.left) / rect.width) * gpAudio.duration;
+}
+function gpSkipBack()  { gpAudio.currentTime = Math.max(0, gpAudio.currentTime - 10); }
+function gpSkipFwd()   { gpAudio.currentTime = Math.min(gpAudio.duration || 0, gpAudio.currentTime + 10); }
+function gpReset() {
+  gpPlaying = false;
+  gpPlayBtn.textContent = '▶';
+  gpCover.style.animationPlayState = 'paused';
+  document.getElementById('gpFill').style.width = '0%';
+}
+function gpFmt(s) {
+  if (!s || isNaN(s)) return '0:00';
+  return Math.floor(s/60) + ':' + String(Math.floor(s%60)).padStart(2,'0');
+}
+</script>
+</body>
+</html>
